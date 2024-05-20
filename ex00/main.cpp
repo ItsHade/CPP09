@@ -5,8 +5,7 @@ int main(int argc, char **argv)
 	try
 	{
 		BitcoinExchange btc(argc, argv[1]);
-		btc.PutConversion();
-
+		btc.Run();
 	}
 	catch(const std::exception& e)
 	{
