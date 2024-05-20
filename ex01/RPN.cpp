@@ -5,23 +5,17 @@ static bool isOperator(std::string &token)
     return (token.size() == 1 && token.find_first_of(OP) != std::string::npos);
 }
 
+// https://stackoverflow.com/questions/3944505/detecting-signed-overflow-in-c-c
+
 static int addition(int nb1, int nb2)
 {
-    std::cout << "addition:" << std::endl;
-    std::cout << "\tnb1: " << nb1 << std::endl;
-    std::cout << "\tnb2: " << nb2 << std::endl;
-    std::cout << "\t" << INT_MAX - nb2 << std::endl;
-    if (nb1 > (INT_MAX - nb2) )
+    if (nb1 > INT_MAX - nb2)
         throw RPN::IntOverflowException();
     return (nb1 + nb2);
 }
-// 1 > 2147483648 + (-8)
 
 static int substraction(int nb1, int nb2)
 {
-    std::cout << "substraction:" << std::endl;
-    std::cout << "\tnb1: " << nb1 << std::endl;
-    std::cout << "\tnb2: " << nb2 << std::endl;
     if (nb1 < INT_MIN + nb2)
         throw RPN::IntOverflowException();
     return (nb1 - nb2);
@@ -29,9 +23,6 @@ static int substraction(int nb1, int nb2)
 
 static int multiplication(int nb1, int nb2)
 {
-    std::cout << "multiplication:" << std::endl;
-    std::cout << "\tnb1: " << nb1 << std::endl;
-    std::cout << "\tnb2: " << nb2 << std::endl;
     if (nb1 != 0 && nb2 != 0)
     {
         if (nb1 > INT_MAX / nb2)
@@ -42,9 +33,6 @@ static int multiplication(int nb1, int nb2)
 
 static int division(int nb1, int nb2)
 {
-    std::cout << "division:" << std::endl;
-    std::cout << "\tnb1: " << nb1 << std::endl;
-    std::cout << "\tnb2: " << nb2 << std::endl;
     if (nb2 == 0)
         throw RPN::DivisionByZeroException();
     return (nb1 / nb2);
