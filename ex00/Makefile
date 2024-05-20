@@ -1,8 +1,8 @@
-SRC = main.cpp
+SRC = main.cpp BitcoinExchange.cpp
 
 OBJ = ${SRC:.cpp=.o}
 
-NAME = BitcoinExchange
+NAME = btc
 
 CC = c++
 
