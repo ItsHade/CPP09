@@ -3,26 +3,24 @@
 template<typename T>
 static void InsertionSort(T & container)
 {
-	int tmp;
+	int currentElement;
     typename T::iterator it;
 	typename T::iterator prev;
 	typename T::iterator j;
     for (it = container.begin(); it != container.end(); ++it)
 	{
-        tmp = *it;
+        currentElement = *it;
         j = it;
         while (j != container.begin()) 
         {
-            prev = j;
-            --prev;
-            if (*prev > tmp) {
+            prev = j - 1;
+            if (*prev > currentElement) {
                 *j = *prev;
                 --j;
             }
             else
                 break;
         }
-        *j = tmp;
     }
     return ;
 }
