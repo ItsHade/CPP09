@@ -5,19 +5,56 @@ static bool isOperator(std::string &token)
     return (token.size() == 1 && token.find_first_of(OP) != std::string::npos);
 }
 
-// https://stackoverflow.com/questions/3944505/detecting-signed-overflow-in-c-c
-
 static int addition(int nb1, int nb2)
 {
-    if (nb1 > INT_MAX - nb2)
-        throw RPN::IntOverflowException();
     return (nb1 + nb2);
 }
 
 static int substraction(int nb1, int nb2)
 {
-    if (nb1 < INT_MIN + nb2)
-        throw RPN::IntOverflowException();
+    return (nb1 - nb2);
+}
+
+static int multiplication(int nb1, int nb2)
+{
+    return (nb1 * nb2);
+}
+
+static int division(int nb1, int nb2)
+{
+    if (nb2 == 0)
+        throw RPN::DivisionByZeroException();
+    return (nb1 / nb2);
+}
+
+/*
+static int addition(int nb1, int nb2)
+{
+    if (nb2 >= 0)
+    {
+        if (nb1 > INT_MAX - nb2)
+            throw RPN::IntOverflowException();
+    }
+    else
+    {
+        if (INT_MAX - nb1 < abs(nb2))
+            throw RPN::IntOverflowException();
+    }
+    return (nb1 + nb2);
+}
+
+static int substraction(int nb1, int nb2)
+{
+    if (nb2 >= 0)
+    {
+        if (nb1 < INT_MIN + nb2)
+            throw RPN::IntOverflowException();
+    }
+    else
+    {
+        if (INT_MIN + nb1 < abs(nb2))
+            throw RPN::IntOverflowException();
+    }
     return (nb1 - nb2);
 }
 
@@ -37,7 +74,7 @@ static int division(int nb1, int nb2)
         throw RPN::DivisionByZeroException();
     return (nb1 / nb2);
 }
-
+*/
 static int ProcessOperation(int nb1, int nb2, const std::string &op)
 {
     static int (*operations[])(int, int) = {addition, substraction, multiplication, division};
@@ -49,7 +86,7 @@ static int ProcessOperation(int nb1, int nb2, const std::string &op)
 static int GetOperand(const std::string &op)
 {
     if (op.size() == 1 && isdigit(op[0]))
-        return (op[0] - 48);
+        return (op[0] - 48); //char to int
     else
         throw RPN::UnexpectedTokenException();
 }
@@ -107,7 +144,6 @@ void RPN::ProcessStack(std::stack<int> &operands) const
             operands.pop();
 
             int result = ProcessOperation(operand2, operand1, token);
-            std::cout << "detail: " << operand2 << " " << token << " " << operand1 << " = " << result << std::endl;
             operands.push(result);
         }
         else
